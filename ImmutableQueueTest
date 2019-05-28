@@ -84,7 +84,7 @@ public class ImmutableQueueTest {
         Assert.assertNotEquals(queue.isEmpty(), enqueueQueue.isEmpty());
     }
 
-    // We have one queue which is empty and after enqueue item we have enqueueQueue which has one item. So as per Immutablity both objects should be the
+    // We have one queue which is empty and after enqueue item we have enqueueQueue with multiple item. So as per Immutablity both objects should be the
     // different
     @Test
     public void enqueueTest() {
@@ -95,7 +95,7 @@ public class ImmutableQueueTest {
         Assert.assertNotEquals(queue, enqueueQueue);
     }
 
-    // We have one queue which is empty and after enqueue items we have enqueueQueue which has one item. When we perform dequeue operation, it gives us two
+    // We have one queue which is empty and after enqueue items we have enqueueQueue with multiple item. When we perform dequeue operation, it gives us two
     // different queue object as per Immutablity
     @Test
     public void dnqueueTest() {
