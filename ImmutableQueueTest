@@ -1,0 +1,125 @@
+import org.junit.Assert;
+import org.junit.Test;
+
+public class ImmutableQueueTest {
+
+    public static void main(String[] args) {
+
+        ImmutableQueue<Integer> newQueue = new ImmutableQueue<>();
+
+        System.out.println("Queue is empty : " + newQueue.isEmpty());
+
+        ImmutableQueue<Integer> enqueuedQueue = newQueue.enQueue(22);
+
+        System.out.println("Queue is empty : " + enqueuedQueue.isEmpty());
+
+        System.out.println(newQueue);
+
+        System.out.println(newQueue);
+
+        newQueue = newQueue.enQueue(5);
+
+        System.out.println(newQueue);
+
+        newQueue = newQueue.enQueue(10);
+
+        System.out.println(newQueue);
+
+        newQueue = newQueue.enQueue(55);
+
+        System.out.println("Head is " + newQueue.head());
+
+        System.out.println(newQueue);
+
+        newQueue = newQueue.deQueue();
+
+        System.out.println(newQueue.size());
+
+        System.out.println("Head is " + newQueue.head());
+
+        newQueue = newQueue.deQueue();
+
+        System.out.println(newQueue.size());
+
+        System.out.println("Head is " + newQueue.head());
+
+        newQueue = newQueue.enQueue(56);
+
+        newQueue = newQueue.enQueue(57);
+
+        newQueue = newQueue.enQueue(58);
+
+        newQueue = newQueue.deQueue();
+
+        System.out.println(newQueue.size());
+
+        System.out.println("Head is " + newQueue.head());
+
+        newQueue = newQueue.deQueue();
+
+        System.out.println(newQueue.size());
+
+        System.out.println("Head is " + newQueue.head());
+
+        newQueue = newQueue.deQueue();
+
+        System.out.println(newQueue.size());
+
+        System.out.println("Head is " + newQueue.head());
+
+    }
+
+    // We have one queue which is empty and after enqueue item we have enqueueQueue which has one item. So as per Immutablity size of both queue should not be
+    // the same.
+    @Test
+    public void isEmptyTest() {
+        ImmutableQueue<Integer> queue = new ImmutableQueue<>();
+
+        ImmutableQueue<Integer> enqueueQueue = queue.enQueue(22);
+
+        Assert.assertEquals(true, queue.isEmpty());
+
+        Assert.assertEquals(false, enqueueQueue.isEmpty());
+
+        Assert.assertNotEquals(queue.isEmpty(), enqueueQueue.isEmpty());
+    }
+
+    // We have one queue which is empty and after enqueue item we have enqueueQueue which has one item. So as per Immutablity both objects should be the
+    // different
+    @Test
+    public void enqueueTest() {
+        ImmutableQueue<Integer> queue = new ImmutableQueue<>();
+
+        ImmutableQueue<Integer> enqueueQueue = queue.enQueue(22);
+
+        Assert.assertNotEquals(queue, enqueueQueue);
+    }
+
+    // We have one queue which is empty and after enqueue items we have enqueueQueue which has one item. When we perform dequeue operation, it gives us two
+    // different queue object as per Immutablity
+    @Test
+    public void dnqueueTest() {
+        ImmutableQueue<Integer> queue = new ImmutableQueue<>();
+
+        ImmutableQueue<Integer> enqueueQueue = queue.enQueue(22);
+
+        enqueueQueue = queue.enQueue(25);
+        enqueueQueue = queue.enQueue(28);
+        enqueueQueue = queue.enQueue(21);
+
+        Assert.assertNotEquals(enqueueQueue, enqueueQueue.deQueue());
+    }
+
+    // to check head item of the queue after enqueue and dequeue operations
+    @Test
+    public void headTest() {
+        ImmutableQueue<Integer> queue = new ImmutableQueue<>();
+        queue = queue.enQueue(22);
+        queue = queue.enQueue(25);
+        queue = queue.enQueue(28);
+        queue = queue.enQueue(21);
+        Assert.assertEquals(22, queue.head().intValue());
+        queue = queue.deQueue();
+        Assert.assertEquals(25, queue.head().intValue());
+    }
+}
