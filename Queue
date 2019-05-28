@@ -1,5 +1,3 @@
-package com.paypay.test.queue;
-
 public interface Queue<T> {
 
     public Queue<T> enQueue(T t);
