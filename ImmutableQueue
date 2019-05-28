@@ -1,10 +1,10 @@
 import java.util.NoSuchElementException;
 
-public class ImmutableQueue<T> implements Queue<T> {
+final public class ImmutableQueue<T> implements Queue<T> {
 
-    private StackWrapper<T> enqueueStack;
+    private final StackWrapper<T> enqueueStack;
 
-    private StackWrapper<T> dequeueStack;
+    private final StackWrapper<T> dequeueStack;
 
     public ImmutableQueue() {
         this.enqueueStack = StackWrapper.emptyStack();
