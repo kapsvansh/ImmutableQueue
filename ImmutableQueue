@@ -1,0 +1,103 @@
+import java.util.NoSuchElementException;
+
+public class ImmutableQueue<T> implements Queue<T> {
+
+    private StackWrapper<T> enqueueStack;
+
+    private StackWrapper<T> dequeueStack;
+
+    public ImmutableQueue() {
+        this.enqueueStack = StackWrapper.emptyStack();
+        this.dequeueStack = StackWrapper.emptyStack();
+    }
+
+    private ImmutableQueue(StackWrapper<T> enqueueStack, StackWrapper<T> dequeueStack) {
+        this.enqueueStack = enqueueStack;
+        this.dequeueStack = dequeueStack;
+    }
+
+    // enqueue method to insert T in the queue and returns new queue
+    @Override
+    public ImmutableQueue<T> enQueue(T t) {
+        if (null == t)
+            throw new IllegalArgumentException();
+        return new ImmutableQueue<>(this.enqueueStack.push(t), this.dequeueStack);
+    }
+
+    // dequeue method to return new queue with head item
+    @Override
+    public ImmutableQueue<T> deQueue() {
+        if (this.isEmpty())
+            throw new NoSuchElementException();
+        if (!this.dequeueStack.isEmpty()) {
+            return new ImmutableQueue<>(this.enqueueStack, this.dequeueStack.tail);
+        } else {
+            return new ImmutableQueue<T>(StackWrapper.emptyStack(), this.enqueueStack.reversee().tail);
+        }
+    }
+
+    // tells if queue is empty or not
+    @Override
+    public boolean isEmpty() {
+        return size() == 0;
+    }
+
+    // return head item of queue
+    @Override
+    public T head() {
+        if (!this.dequeueStack.isEmpty()) {
+            return this.dequeueStack.head;
+        } else {
+            return this.enqueueStack.reversee().head;
+        }
+    }
+
+    // return total number of items preseted in queue
+    public int size() {
+        return this.enqueueStack.size + this.dequeueStack.size;
+    }
+
+    // Create a private static class for stack as a child for queue
+    private static class StackWrapper<T> {
+        private T               head;
+        private StackWrapper<T> tail;
+        private int             size;
+
+        private StackWrapper() {
+            this.size = 0;
+            this.head = null;
+            this.tail = null;
+        }
+
+        private StackWrapper(T head, StackWrapper<T> tail) {
+            this.size = tail.size + 1;
+            this.head = head;
+            this.tail = tail;
+        }
+
+        public static StackWrapper emptyStack() {
+            return new StackWrapper();
+        }
+
+        // returns reversed stack
+        public StackWrapper<T> reversee() {
+            StackWrapper<T> stack = new StackWrapper<>();
+            StackWrapper<T> tail = this;
+            while (!tail.isEmpty()) {
+                stack = stack.push(tail.head);
+                tail = tail.tail;
+            }
+            return stack;
+        }
+
+        // tells if stack is empty or not
+        public boolean isEmpty() {
+            return this.size == 0;
+        }
+
+        // insert a new item in the stack
+        public StackWrapper<T> push(T obj) {
+            return new StackWrapper<>(obj, this);
+        }
+    }
+}
